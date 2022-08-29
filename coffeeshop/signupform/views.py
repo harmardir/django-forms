@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from django.http import HttpResponse , HttpResponseRedirect
-from .forms import NameForm
+from .forms import NameForm , UserForm
 
 def Home(request):
     return render(request,"signupform/home.html")
@@ -12,16 +12,12 @@ def Thanks(request):
 def Signup(request):
     if request.method == 'POST':
         # process the form data
-        form = NameForm(request.POST)
-    
+        form = UserForm(request.POST)
         if form.is_valid():
-            # validate the data
-            # ...
-            # redirect to new URL
             form.save()
-            return HttpResponseRedirect('thanks')
+            return redirect('thanks')
     
     else:
         # create a blank form
-        form = NameForm()
+        form = UserForm()
     return render(request,"signupform/signup.html", {'form': form})
