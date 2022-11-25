@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import ContactForm
+from .forms import ContactForm , SnippetForm
 
 def contact(request):
 
@@ -13,6 +13,17 @@ def contact(request):
 
             print(name , email)
 
-            
+
     form = ContactForm()
     return render(request, 'form.html', {'form': form})
+
+def snippet_detail(request):
+
+    if request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #print("VALID")
+    
+    form = SnippetForm()
+    return render(request , 'form.html', {'form': form})
